@@ -91,6 +91,41 @@
           <Property Name="Activo" Type="int" />
           <Property Name="vencimiento" Type="date" />
         </EntityType>
+        <EntityType Name="rel_inquilinodepto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_inquilino" Type="int" Nullable="false" />
+          <Property Name="id_fichadepto" Type="int" Nullable="false" />
+          <Property Name="tipo_inquilino" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_fichadepartamento">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="edificio" Type="varchar" MaxLength="50" />
+          <Property Name="numero" Type="varchar" MaxLength="50" />
+          <Property Name="piso" Type="varchar" MaxLength="50" />
+          <Property Name="lote" Type="varchar" MaxLength="50" />
+          <Property Name="manzana" Type="varchar" MaxLength="50" />
+          <Property Name="observaciones" Type="varchar" MaxLength="50" />
+          <Property Name="estatus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_inquilinos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="appaterno" Type="varchar" MaxLength="50" />
+          <Property Name="apmaterno" Type="varchar" MaxLength="50" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="tel_cel" Type="varchar" MaxLength="50" />
+          <Property Name="tel_casa" Type="varchar" MaxLength="50" />
+          <Property Name="correo" Type="varchar" MaxLength="50" />
+          <Property Name="tipo_inquilino" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -147,6 +182,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_rel_inquilinodepto_tbl_fichadepartamento">
+          <End Role="tbl_fichadepartamento" Type="Self.tbl_fichadepartamento" Multiplicity="1" />
+          <End Role="rel_inquilinodepto" Type="Self.rel_inquilinodepto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_fichadepartamento">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rel_inquilinodepto">
+              <PropertyRef Name="id_fichadepto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rel_inquilinodepto_tbl_inquilinos">
+          <End Role="tbl_inquilinos" Type="Self.tbl_inquilinos" Multiplicity="1" />
+          <End Role="rel_inquilinodepto" Type="Self.rel_inquilinodepto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_inquilinos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rel_inquilinodepto">
+              <PropertyRef Name="id_inquilino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="dbDepartanetModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -156,6 +215,9 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="comprobantesPago" EntityType="Self.comprobantesPago" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rel_inquilinodepto" EntityType="Self.rel_inquilinodepto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_fichadepartamento" EntityType="Self.tbl_fichadepartamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_inquilinos" EntityType="Self.tbl_inquilinos" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -171,6 +233,14 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rel_inquilinodepto_tbl_fichadepartamento" Association="Self.FK_rel_inquilinodepto_tbl_fichadepartamento">
+            <End Role="tbl_fichadepartamento" EntitySet="tbl_fichadepartamento" />
+            <End Role="rel_inquilinodepto" EntitySet="rel_inquilinodepto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rel_inquilinodepto_tbl_inquilinos" Association="Self.FK_rel_inquilinodepto_tbl_inquilinos">
+            <End Role="tbl_inquilinos" EntitySet="tbl_inquilinos" />
+            <End Role="rel_inquilinodepto" EntitySet="rel_inquilinodepto" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -288,6 +358,17 @@
           </AssociationSet>
           <EntitySet Name="Productos" EntityType="dbDepartanetModel.Productos" />
           <EntitySet Name="comprobantesPago" EntityType="dbDepartanetModel.comprobantesPago" />
+          <EntitySet Name="tbl_fichadepartamento" EntityType="dbDepartanetModel.tbl_fichadepartamento" />
+          <EntitySet Name="tbl_inquilinos" EntityType="dbDepartanetModel.tbl_inquilinos" />
+          <EntitySet Name="rel_inquilinodepto" EntityType="dbDepartanetModel.rel_inquilinodepto" />
+          <AssociationSet Name="FK_rel_inquilinodepto_tbl_fichadepartamento" Association="dbDepartanetModel.FK_rel_inquilinodepto_tbl_fichadepartamento">
+            <End Role="tbl_fichadepartamento" EntitySet="tbl_fichadepartamento" />
+            <End Role="rel_inquilinodepto" EntitySet="rel_inquilinodepto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rel_inquilinodepto_tbl_inquilinos" Association="dbDepartanetModel.FK_rel_inquilinodepto_tbl_inquilinos">
+            <End Role="tbl_inquilinos" EntitySet="tbl_inquilinos" />
+            <End Role="rel_inquilinodepto" EntitySet="rel_inquilinodepto" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Productos">
           <Key>
@@ -314,6 +395,69 @@
           <Property Name="fecha_validado" Type="DateTime" Precision="3" />
           <Property Name="observaciones" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="tbl_fichadepartamento">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="edificio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="numero" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="piso" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lote" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="manzana" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="observaciones" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="rel_inquilinodepto" Relationship="dbDepartanetModel.FK_rel_inquilinodepto_tbl_fichadepartamento" FromRole="tbl_fichadepartamento" ToRole="rel_inquilinodepto" />
+        </EntityType>
+        <EntityType Name="tbl_inquilinos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="appaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="apmaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tel_cel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tel_casa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tipo_inquilino" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="rel_inquilinodepto" Relationship="dbDepartanetModel.FK_rel_inquilinodepto_tbl_inquilinos" FromRole="tbl_inquilinos" ToRole="rel_inquilinodepto" />
+        </EntityType>
+        <EntityType Name="rel_inquilinodepto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_inquilino" Type="Int32" Nullable="false" />
+          <Property Name="id_fichadepto" Type="Int32" Nullable="false" />
+          <Property Name="tipo_inquilino" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tbl_fichadepartamento" Relationship="dbDepartanetModel.FK_rel_inquilinodepto_tbl_fichadepartamento" FromRole="rel_inquilinodepto" ToRole="tbl_fichadepartamento" />
+          <NavigationProperty Name="tbl_inquilinos" Relationship="dbDepartanetModel.FK_rel_inquilinodepto_tbl_inquilinos" FromRole="rel_inquilinodepto" ToRole="tbl_inquilinos" />
+        </EntityType>
+        <Association Name="FK_rel_inquilinodepto_tbl_fichadepartamento">
+          <End Type="dbDepartanetModel.tbl_fichadepartamento" Role="tbl_fichadepartamento" Multiplicity="1" />
+          <End Type="dbDepartanetModel.rel_inquilinodepto" Role="rel_inquilinodepto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_fichadepartamento">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rel_inquilinodepto">
+              <PropertyRef Name="id_fichadepto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rel_inquilinodepto_tbl_inquilinos">
+          <End Type="dbDepartanetModel.tbl_inquilinos" Role="tbl_inquilinos" Multiplicity="1" />
+          <End Type="dbDepartanetModel.rel_inquilinodepto" Role="rel_inquilinodepto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_inquilinos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rel_inquilinodepto">
+              <PropertyRef Name="id_inquilino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -406,6 +550,44 @@
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
                 <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_fichadepartamento">
+            <EntityTypeMapping TypeName="dbDepartanetModel.tbl_fichadepartamento">
+              <MappingFragment StoreEntitySet="tbl_fichadepartamento">
+                <ScalarProperty Name="estatus" ColumnName="estatus" />
+                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+                <ScalarProperty Name="manzana" ColumnName="manzana" />
+                <ScalarProperty Name="lote" ColumnName="lote" />
+                <ScalarProperty Name="piso" ColumnName="piso" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="edificio" ColumnName="edificio" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_inquilinos">
+            <EntityTypeMapping TypeName="dbDepartanetModel.tbl_inquilinos">
+              <MappingFragment StoreEntitySet="tbl_inquilinos">
+                <ScalarProperty Name="tipo_inquilino" ColumnName="tipo_inquilino" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="tel_casa" ColumnName="tel_casa" />
+                <ScalarProperty Name="tel_cel" ColumnName="tel_cel" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apmaterno" ColumnName="apmaterno" />
+                <ScalarProperty Name="appaterno" ColumnName="appaterno" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rel_inquilinodepto">
+            <EntityTypeMapping TypeName="dbDepartanetModel.rel_inquilinodepto">
+              <MappingFragment StoreEntitySet="rel_inquilinodepto">
+                <ScalarProperty Name="tipo_inquilino" ColumnName="tipo_inquilino" />
+                <ScalarProperty Name="id_fichadepto" ColumnName="id_fichadepto" />
+                <ScalarProperty Name="id_inquilino" ColumnName="id_inquilino" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

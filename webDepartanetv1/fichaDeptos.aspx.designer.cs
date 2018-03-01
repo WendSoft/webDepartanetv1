@@ -10,61 +10,97 @@
 namespace webDepartanetv1 {
     
     
-    public partial class Productos1 {
+    public partial class fichaDeptos {
         
         /// <summary>
-        /// Control ErrorMessage.
+        /// Control btnAgregar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ErrorMessage;
+        protected global::System.Web.UI.WebControls.Button btnAgregar;
         
         /// <summary>
-        /// Control ddlPeriodo.
+        /// Control gvFichasDepartamentos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPeriodo;
+        protected global::System.Web.UI.WebControls.GridView gvFichasDepartamentos;
         
         /// <summary>
-        /// Control txtNombre.
+        /// Control upModal.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombre;
+        protected global::System.Web.UI.UpdatePanel upModal;
         
         /// <summary>
-        /// Control txtDescripcion.
+        /// Control lblModalTitle.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
+        protected global::System.Web.UI.WebControls.Label lblModalTitle;
         
         /// <summary>
-        /// Control txtVencimiento.
+        /// Control txtNumero.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtVencimiento;
+        protected global::System.Web.UI.WebControls.TextBox txtNumero;
         
         /// <summary>
-        /// Control txtImporte.
+        /// Control txtEdificio.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtImporte;
+        protected global::System.Web.UI.WebControls.TextBox txtEdificio;
+        
+        /// <summary>
+        /// Control txtObservaciones.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtObservaciones;
+        
+        /// <summary>
+        /// Control ddlDuenio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlDuenio;
+        
+        /// <summary>
+        /// Control ddlResponsable.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlResponsable;
+        
+        /// <summary>
+        /// Control btnActualizar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnActualizar;
         
         /// <summary>
         /// Control btnGuardar.
@@ -76,21 +112,15 @@ namespace webDepartanetv1 {
         protected global::System.Web.UI.WebControls.Button btnGuardar;
         
         /// <summary>
-        /// Control btnCancelar.
+        /// Propiedad Master.
         /// </summary>
         /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// Propiedad generada automáticamente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelar;
-        
-        /// <summary>
-        /// Control gvProductos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvProductos;
+        public new webDepartanetv1.SiteMaster Master {
+            get {
+                return ((webDepartanetv1.SiteMaster)(base.Master));
+            }
+        }
     }
 }
