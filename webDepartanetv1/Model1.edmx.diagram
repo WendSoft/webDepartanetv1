@@ -13,13 +13,16 @@
         <AssociationConnector Association="dbDepartanetModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="dbDepartanetModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="dbDepartanetModel.AspNetUserRoles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="dbDepartanetModel.Productos" Width="1.5" PointX="8.125" PointY="0.875" />
+        <EntityTypeShape EntityType="dbDepartanetModel.Productos" Width="1.5" PointX="9.25" PointY="0.875" />
         <EntityTypeShape EntityType="dbDepartanetModel.comprobantesPago" Width="1.5" PointX="4.875" PointY="6.125" />
-        <EntityTypeShape EntityType="dbDepartanetModel.tbl_fichadepartamento" Width="1.5" PointX="13.875" PointY="3.5" />
-        <EntityTypeShape EntityType="dbDepartanetModel.tbl_inquilinos" Width="1.5" PointX="14" PointY="6.5" />
-        <EntityTypeShape EntityType="dbDepartanetModel.rel_inquilinodepto" Width="1.5" PointX="10.5" PointY="5.625" />
+        <EntityTypeShape EntityType="dbDepartanetModel.tbl_fichadepartamento" Width="1.5" PointX="13.125" PointY="2.75" />
+        <EntityTypeShape EntityType="dbDepartanetModel.tbl_inquilinos" Width="1.5" PointX="8.75" PointY="7.375" />
+        <EntityTypeShape EntityType="dbDepartanetModel.rel_inquilinodepto" Width="1.5" PointX="11.375" PointY="4.125" />
         <AssociationConnector Association="dbDepartanetModel.FK_rel_inquilinodepto_tbl_fichadepartamento" />
         <AssociationConnector Association="dbDepartanetModel.FK_rel_inquilinodepto_tbl_inquilinos" />
+        <EntityTypeShape EntityType="dbDepartanetModel.rel_usr_inquilino" Width="1.5" PointX="7.875" PointY="4.375" />
+        <AssociationConnector Association="dbDepartanetModel.FK_rel_usr_inquilino_AspNetUsers" />
+        <AssociationConnector Association="dbDepartanetModel.FK_rel_usr_inquilino_tbl_inquilinos" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

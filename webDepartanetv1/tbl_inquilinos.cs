@@ -18,6 +18,7 @@ namespace webDepartanetv1
         public tbl_inquilinos()
         {
             this.rel_inquilinodepto = new HashSet<rel_inquilinodepto>();
+            this.rel_usr_inquilino = new HashSet<rel_usr_inquilino>();
         }
     
         public int id { get; set; }
@@ -31,5 +32,7 @@ namespace webDepartanetv1
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rel_inquilinodepto> rel_inquilinodepto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rel_usr_inquilino> rel_usr_inquilino { get; set; }
     }
 }

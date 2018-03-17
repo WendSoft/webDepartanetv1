@@ -10,7 +10,7 @@
 
         <div class="row">
             <div class="float-right">
-                <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-success float-right" Style="float: right;" Text="Agregar ficha" CausesValidation="false" OnClick="btnAgregar_Click"></asp:Button>
+                <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-success float-right" Style="float: right;" Text="Agregar Departamento" CausesValidation="false" OnClick="btnAgregar_Click"></asp:Button>
             </div>
             <asp:GridView ID="gvFichasDepartamentos" runat="server" AutoGenerateColumns="False" DataKeyNames="id" CssClass="table table-bordered bs-table table-hover" OnRowEditing="gvFichasDepartamentos_RowEditing" OnSelectedIndexChanged="gvFichasDepartamentos_SelectedIndexChanged" OnSelectedIndexChanging="gvFichasDepartamentos_SelectedIndexChanging">
                 <HeaderStyle BackColor="#337ab7" Font-Bold="True" Font-Size="Smaller" ForeColor="White" />
@@ -56,6 +56,11 @@
                                 <tr>
                                     <td>Inquilino responsable:
                                     </td>
+                                    <td><%# ObtenOcupantes((int)Eval("id"),"responsable")%></td>
+                                </tr>
+                                <tr>
+                                    <td>Inquilinos:
+                                    </td>
                                     <td><%# ObtenOcupantes((int)Eval("id"),"inquilino")%></td>
                                 </tr>
                             </table>
@@ -77,53 +82,50 @@
     <!-- Bootstrap Modal Dialog -->
     <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <asp:UpdatePanel ID="upModal" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
-                <ContentTemplate>
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">
-                                <asp:Label ID="lblModalTitle" runat="server" Text="Ficha de departamento"></asp:Label></h4>
-                        </div>
-                        <div class="modal-body" style="height: 390px;">
 
-                            <div class="col-md-8">
-                                <asp:Label runat="server" AssociatedControlID="txtNumero" CssClass="col-md-3 control-label">Número</asp:Label>
-                                <asp:TextBox runat="server" ID="txtNumero" CssClass="form-control" />
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="txtNumero"
-                                    CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
-                            </div>
-                            <div class="col-md-8">
-                                <asp:Label runat="server" AssociatedControlID="txtEdificio" CssClass="col-md-3 control-label">Edificio</asp:Label>
-                                <asp:TextBox runat="server" ID="txtEdificio" CssClass="form-control" />
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="txtEdificio"
-                                    CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
-                            </div>
-                            <div class="col-md-8">
-                                <asp:Label runat="server" AssociatedControlID="txtEdificio" CssClass="col-md-3 control-label">Observaciones</asp:Label>
-                                <asp:TextBox runat="server" ID="txtObservaciones" CssClass="form-control" />
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="txtEdificio"
-                                    CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
-                            </div>
-                            <div class="col-md-8">
-                                <asp:Label runat="server" AssociatedControlID="ddlDuenio" CssClass="col-md-3 control-label">Dueño</asp:Label>
-                                <asp:DropDownList ID="ddlDuenio" runat="server" CssClass="form-control">
-                                </asp:DropDownList>
-                            </div>
-                            <div class="col-md-8">
-                                <asp:Label runat="server" AssociatedControlID="ddlResponsable" CssClass="col-md-3 control-label">Responsable</asp:Label>
-                                <asp:DropDownList ID="ddlResponsable" runat="server" CssClass="form-control">
-                                </asp:DropDownList>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-info" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-                            <asp:Button ID="btnActualizar" runat="server" CssClass="btn btn-info" data-dismiss="modal" aria-hidden="true" Text="Actualizar" OnClick="btnActualizar_Click"></asp:Button>
-                            <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-info" aria-hidden="true" Text="Guardar" OnClick="btnGuardar_Click"></asp:Button>
-                        </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">
+                        <asp:Label ID="lblModalTitle" runat="server" Text="Ficha de departamento"></asp:Label></h4>
+                </div>
+                <div class="modal-body" style="height: 390px;">
+
+                    <div class="col-md-8">
+                        <asp:Label runat="server" AssociatedControlID="txtNumero" CssClass="col-md-3 control-label">Número</asp:Label>
+                        <asp:TextBox runat="server" ID="txtNumero" CssClass="form-control" />
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="txtNumero"
+                            CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
                     </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+                    <div class="col-md-8">
+                        <asp:Label runat="server" AssociatedControlID="txtEdificio" CssClass="col-md-3 control-label">Edificio</asp:Label>
+                        <asp:TextBox runat="server" ID="txtEdificio" CssClass="form-control" />
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="txtEdificio"
+                            CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
+                    </div>
+                    <div class="col-md-8">
+                        <asp:Label runat="server" AssociatedControlID="txtEdificio" CssClass="col-md-3 control-label">Observaciones</asp:Label>
+                        <asp:TextBox runat="server" ID="txtObservaciones" CssClass="form-control" />
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="txtEdificio"
+                            CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
+                    </div>
+                    <div class="col-md-8">
+                        <asp:Label runat="server" AssociatedControlID="ddlDuenio" CssClass="col-md-3 control-label">Dueño</asp:Label>
+                        <asp:DropDownList ID="ddlDuenio" runat="server" CssClass="form-control">
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-md-8">
+                        <asp:Label runat="server" AssociatedControlID="ddlResponsable" CssClass="col-md-3 control-label">Responsable</asp:Label>
+                        <asp:DropDownList ID="ddlResponsable" runat="server" CssClass="form-control">
+                        </asp:DropDownList>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+                    <asp:Button ID="btnActualizar" runat="server" CssClass="btn btn-info" data-dismiss="modal" aria-hidden="true" Text="Actualizar" OnClick="btnActualizar_Click"></asp:Button>
+                    <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-success" aria-hidden="true" Text="Guardar" OnClick="btnGuardar_Click"></asp:Button>
+                </div>
+            </div>
         </div>
     </div>
 

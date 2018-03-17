@@ -37,7 +37,6 @@
                 <%--Scripts del sitio--%>
             </Scripts>
         </asp:ScriptManager>
-
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -53,7 +52,6 @@
                         <li><a runat="server" href="~/">Inicio</a></li>
                         <li><a runat="server" href="~/About">Acerca de</a></li>
                         <li><a runat="server" href="~/Contact">Contacto</a></li>
-
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
@@ -64,16 +62,41 @@
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
-                                <li><a runat="server" href="~/Productos">Catálogos</a></li>
-                                <li><a runat="server" href="~/generalPagos">Listado de Comprobantes</a></li>
-                                <li><a runat="server" href="~/cargaPagos">Alta de comprobantes</a></li>
-                                <li><a runat="server" href="~/fichaDeptos">Departamentos</a></li>
+                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hola, <%: Context.User.Identity.GetUserName()  %> !</a></li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestión de comprobantes<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a runat="server" href="~/cargaPagos">Alta de comprobantes</a></li>
+                                        <li><a runat="server" href="~/generalPagos">Listado de Comprobantes</a></li>
+                                    </ul>
+                                </li>
                                 <li>
                                     <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Cerrar sesión" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
                                 </li>
                             </ul>
                         </LoggedInTemplate>
+                        <RoleGroups>
+                            <asp:RoleGroup Roles="Administrador">
+                                <ContentTemplate>
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
+                                        <li><a runat="server" href="~/Productos">Conceptos de Pago</a></li>
+                                        <li><a runat="server" href="~/fichaDeptos">Departamentos</a></li>
+                                        <li><a runat="server" href="~/fichaInquilino">Inquilinos</a></li>
+                                        <li class="dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestión de comprobantes<span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a runat="server" href="~/cargaPagos">Alta de comprobantes</a></li>
+                                                <li><a runat="server" href="~/generalPagos">Listado de Comprobantes</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Cerrar sesión" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                                        </li>
+                                    </ul>
+                                </ContentTemplate>
+                            </asp:RoleGroup>
+                        </RoleGroups>
                     </asp:LoginView>
                 </div>
             </div>

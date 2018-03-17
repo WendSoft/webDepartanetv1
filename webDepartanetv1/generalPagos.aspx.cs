@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.AspNet.Identity;
 
 namespace webDepartanetv1
 {
@@ -24,14 +25,30 @@ namespace webDepartanetv1
         protected void CargarComprobantes()
         {
             dbDepartanetEntities db = new dbDepartanetEntities();
-            gvComprobantes.DataSource = db.comprobantesPago.ToList();
+            string idUsr = User.Identity.GetUserId();
+
+            if (User.IsInRole("Administrador"))
+            {
+                gvComprobantes.DataSource = db.comprobantesPago.ToList();
+            }
+            else
+            {
+                gvComprobantes.Columns[0].Visible = false;
+                gvComprobantes.Columns[gvComprobantes.Columns.Count - 1].Visible = false;
+                gvComprobantes.DataSource = db.comprobantesPago.Where(u => u.id_usuario == idUsr).ToList();
+            }
+
+
             gvComprobantes.DataBind();
         }
 
         protected string ObtenUsuario(string id_usuario)
         {
             dbDepartanetEntities db = new dbDepartanetEntities();
+
             return db.AspNetUsers.Where(u => u.Id == id_usuario).First().UserName.ToString();
+
+
         }
 
 

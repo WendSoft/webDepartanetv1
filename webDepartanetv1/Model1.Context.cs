@@ -35,5 +35,6 @@ namespace webDepartanetv1
         public virtual DbSet<tbl_fichadepartamento> tbl_fichadepartamento { get; set; }
         public virtual DbSet<tbl_inquilinos> tbl_inquilinos { get; set; }
         public virtual DbSet<rel_inquilinodepto> rel_inquilinodepto { get; set; }
+        public virtual DbSet<rel_usr_inquilino> rel_usr_inquilino { get; set; }
     }
 }

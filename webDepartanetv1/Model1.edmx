@@ -100,6 +100,14 @@
           <Property Name="id_fichadepto" Type="int" Nullable="false" />
           <Property Name="tipo_inquilino" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="rel_usr_inquilino">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_usuario" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="id_inquilino" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="tbl_fichadepartamento">
           <Key>
             <PropertyRef Name="id" />
@@ -206,6 +214,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_rel_usr_inquilino_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="rel_usr_inquilino" Type="Self.rel_usr_inquilino" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="rel_usr_inquilino">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rel_usr_inquilino_tbl_inquilinos">
+          <End Role="tbl_inquilinos" Type="Self.tbl_inquilinos" Multiplicity="1" />
+          <End Role="rel_usr_inquilino" Type="Self.rel_usr_inquilino" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_inquilinos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rel_usr_inquilino">
+              <PropertyRef Name="id_inquilino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="dbDepartanetModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -216,6 +248,7 @@
           <EntitySet Name="comprobantesPago" EntityType="Self.comprobantesPago" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rel_inquilinodepto" EntityType="Self.rel_inquilinodepto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rel_usr_inquilino" EntityType="Self.rel_usr_inquilino" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_fichadepartamento" EntityType="Self.tbl_fichadepartamento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_inquilinos" EntityType="Self.tbl_inquilinos" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -241,6 +274,14 @@
           <AssociationSet Name="FK_rel_inquilinodepto_tbl_inquilinos" Association="Self.FK_rel_inquilinodepto_tbl_inquilinos">
             <End Role="tbl_inquilinos" EntitySet="tbl_inquilinos" />
             <End Role="rel_inquilinodepto" EntitySet="rel_inquilinodepto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rel_usr_inquilino_AspNetUsers" Association="Self.FK_rel_usr_inquilino_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="rel_usr_inquilino" EntitySet="rel_usr_inquilino" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rel_usr_inquilino_tbl_inquilinos" Association="Self.FK_rel_usr_inquilino_tbl_inquilinos">
+            <End Role="tbl_inquilinos" EntitySet="tbl_inquilinos" />
+            <End Role="rel_usr_inquilino" EntitySet="rel_usr_inquilino" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -305,6 +346,7 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="rel_usr_inquilino" Relationship="dbDepartanetModel.FK_rel_usr_inquilino_AspNetUsers" FromRole="AspNetUsers" ToRole="rel_usr_inquilino" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -369,6 +411,15 @@
             <End Role="tbl_inquilinos" EntitySet="tbl_inquilinos" />
             <End Role="rel_inquilinodepto" EntitySet="rel_inquilinodepto" />
           </AssociationSet>
+          <EntitySet Name="rel_usr_inquilino" EntityType="dbDepartanetModel.rel_usr_inquilino" />
+          <AssociationSet Name="FK_rel_usr_inquilino_AspNetUsers" Association="dbDepartanetModel.FK_rel_usr_inquilino_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="rel_usr_inquilino" EntitySet="rel_usr_inquilino" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rel_usr_inquilino_tbl_inquilinos" Association="dbDepartanetModel.FK_rel_usr_inquilino_tbl_inquilinos">
+            <End Role="tbl_inquilinos" EntitySet="tbl_inquilinos" />
+            <End Role="rel_usr_inquilino" EntitySet="rel_usr_inquilino" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Productos">
           <Key>
@@ -422,6 +473,7 @@
           <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="tipo_inquilino" Type="Int32" Nullable="false" />
           <NavigationProperty Name="rel_inquilinodepto" Relationship="dbDepartanetModel.FK_rel_inquilinodepto_tbl_inquilinos" FromRole="tbl_inquilinos" ToRole="rel_inquilinodepto" />
+          <NavigationProperty Name="rel_usr_inquilino" Relationship="dbDepartanetModel.FK_rel_usr_inquilino_tbl_inquilinos" FromRole="tbl_inquilinos" ToRole="rel_usr_inquilino" />
         </EntityType>
         <EntityType Name="rel_inquilinodepto">
           <Key>
@@ -454,6 +506,40 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="rel_inquilinodepto">
+              <PropertyRef Name="id_inquilino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="rel_usr_inquilino">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_usuario" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="id_inquilino" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="dbDepartanetModel.FK_rel_usr_inquilino_AspNetUsers" FromRole="rel_usr_inquilino" ToRole="AspNetUsers" />
+          <NavigationProperty Name="tbl_inquilinos" Relationship="dbDepartanetModel.FK_rel_usr_inquilino_tbl_inquilinos" FromRole="rel_usr_inquilino" ToRole="tbl_inquilinos" />
+        </EntityType>
+        <Association Name="FK_rel_usr_inquilino_AspNetUsers">
+          <End Type="dbDepartanetModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="dbDepartanetModel.rel_usr_inquilino" Role="rel_usr_inquilino" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="rel_usr_inquilino">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rel_usr_inquilino_tbl_inquilinos">
+          <End Type="dbDepartanetModel.tbl_inquilinos" Role="tbl_inquilinos" Multiplicity="1" />
+          <End Type="dbDepartanetModel.rel_usr_inquilino" Role="rel_usr_inquilino" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_inquilinos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rel_usr_inquilino">
               <PropertyRef Name="id_inquilino" />
             </Dependent>
           </ReferentialConstraint>
@@ -588,6 +674,15 @@
                 <ScalarProperty Name="tipo_inquilino" ColumnName="tipo_inquilino" />
                 <ScalarProperty Name="id_fichadepto" ColumnName="id_fichadepto" />
                 <ScalarProperty Name="id_inquilino" ColumnName="id_inquilino" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rel_usr_inquilino">
+            <EntityTypeMapping TypeName="dbDepartanetModel.rel_usr_inquilino">
+              <MappingFragment StoreEntitySet="rel_usr_inquilino">
+                <ScalarProperty Name="id_inquilino" ColumnName="id_inquilino" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

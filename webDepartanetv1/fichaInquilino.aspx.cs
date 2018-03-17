@@ -11,7 +11,7 @@ namespace webDepartanetv1
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (!this.IsPostBack)
             {
                 cargaFichaInquilinos();
             }
@@ -82,13 +82,13 @@ namespace webDepartanetv1
             switch (tipo_inquilino)
             {
                 case 1:
-                    nom_tipo_inquilino = "Inquilino";
+                    nom_tipo_inquilino = "Dueño";
                     break;
                 case 2:
                     nom_tipo_inquilino = "Responsable";
                     break;
                 default:
-                    nom_tipo_inquilino = "-";
+                    nom_tipo_inquilino = "Inquilino";
                     break;
             }
             return nom_tipo_inquilino;
@@ -110,6 +110,7 @@ namespace webDepartanetv1
             txtEmail.Text = "";
             rblTipo.ClearSelection();
             btnActualizar.Visible = false;
+            btnGuardar.Visible = true;
 
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "myModal", "$('#myModal').modal();", true);
 

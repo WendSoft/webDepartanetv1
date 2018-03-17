@@ -20,6 +20,7 @@ namespace webDepartanetv1
             this.AspNetUserClaims = new HashSet<AspNetUserClaims>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogins>();
             this.AspNetRoles = new HashSet<AspNetRoles>();
+            this.rel_usr_inquilino = new HashSet<rel_usr_inquilino>();
         }
     
         public string Id { get; set; }
@@ -41,5 +42,7 @@ namespace webDepartanetv1
         public virtual ICollection<AspNetUserLogins> AspNetUserLogins { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rel_usr_inquilino> rel_usr_inquilino { get; set; }
     }
 }

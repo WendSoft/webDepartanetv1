@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using Microsoft.AspNet.Identity;
 namespace webDepartanetv1
 {
     public partial class fichaDeptos : System.Web.UI.Page
@@ -24,8 +24,22 @@ namespace webDepartanetv1
         protected void cargaFichaDepartamentos()
         {
             dbDepartanetEntities db = new dbDepartanetEntities();
-            gvFichasDepartamentos.DataSource = db.tbl_fichadepartamento.ToList();
+
             gvFichasDepartamentos.DataBind();
+
+            string idUsr = User.Identity.GetUserId();
+
+            if (User.IsInRole("Administrador"))
+            {
+                gvFichasDepartamentos.DataSource = db.tbl_fichadepartamento.ToList();
+            }
+            else
+            {
+                gvFichasDepartamentos.Columns[0].Visible = false;
+                gvFichasDepartamentos.DataSource = db.tbl_fichadepartamento.Where(d => d.rel_inquilinodepto.Where(rel => rel.tbl_inquilinos.rel_usr_inquilino.Where(inq => inq.id_usuario == idUsr).Count() > 0).Count() > 0).ToList();
+            }
+            gvFichasDepartamentos.DataBind();
+
         }
 
         protected void gvFichasDepartamentos_RowEditing(object sender, GridViewEditEventArgs e)
@@ -67,8 +81,10 @@ namespace webDepartanetv1
                 ddlResponsable.SelectedValue = db.tbl_inquilinos.Where(a => a.rel_inquilinodepto.Where(b => b.id_fichadepto == (int)gvFichasDepartamentos.SelectedDataKey.Value).Count() > 0 && a.tipo_inquilino == 2).First().id.ToString();
             }
 
+            btnGuardar.Visible = false;
+            btnActualizar.Visible = true;
+
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "myModal", "$('#myModal').modal();", true);
-            upModal.Update();
         }
 
 
@@ -113,12 +129,34 @@ namespace webDepartanetv1
 
             System.Text.StringBuilder str = new System.Text.StringBuilder();
 
-            foreach (tbl_inquilinos item in db.tbl_inquilinos.Where(a => a.rel_inquilinodepto.Where(b => b.id_fichadepto == id).Count() > 0 && a.tipo_inquilino == (tipo == "dueño" ? 1 : 2)))
+            if (tipo == "dueño")
             {
-                str.AppendLine(item.appaterno + " " + item.apmaterno + ", " + item.nombre + "<br>");
-                str.AppendLine("Tel cel: " + item.tel_cel + "<br>Tel casa: " + item.tel_casa + "<br>");
-                str.AppendLine("email: " + item.correo);
+                foreach (tbl_inquilinos item in db.tbl_inquilinos.Where(a => a.rel_inquilinodepto.Where(b => b.id_fichadepto == id).Count() > 0 && a.tipo_inquilino == 1))
+                {
+                    str.AppendLine(item.appaterno + " " + item.apmaterno + ", " + item.nombre + "<br>");
+                    str.AppendLine("Tel cel: " + item.tel_cel + "<br>Tel casa: " + item.tel_casa + "<br>");
+                    str.AppendLine("email: " + item.correo);
+                }
             }
+            else if (tipo == "responsable")
+            {
+                foreach (tbl_inquilinos item in db.tbl_inquilinos.Where(a => a.rel_inquilinodepto.Where(b => b.id_fichadepto == id).Count() > 0 && a.tipo_inquilino == 2))
+                {
+                    str.AppendLine(item.appaterno + " " + item.apmaterno + ", " + item.nombre + "<br>");
+                    str.AppendLine("Tel cel: " + item.tel_cel + "<br>Tel casa: " + item.tel_casa + "<br>");
+                    str.AppendLine("email: " + item.correo);
+                }
+            }
+            else if (tipo == "inquilino")
+            {
+                foreach (tbl_inquilinos item in db.tbl_inquilinos.Where(a => a.rel_inquilinodepto.Where(b => b.id_fichadepto == id).Count() > 0 && a.tipo_inquilino == 3))
+                {
+                    str.AppendLine(item.appaterno + " " + item.apmaterno + ", " + item.nombre + "<br>");
+                    str.AppendLine("Tel cel: " + item.tel_cel + "<br>Tel casa: " + item.tel_casa + "<br>");
+                    str.AppendLine("email: " + item.correo);
+                }
+            }
+
 
             return str.ToString();
         }
@@ -147,8 +185,10 @@ namespace webDepartanetv1
             }
             ddlDuenio.Items.Insert(0, new ListItem("...", ""));
 
+            btnGuardar.Visible = true;
+            btnActualizar.Visible = false;
+
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "myModal", "$('#myModal').modal();", true);
-            upModal.Update();
         }
 
         protected void btnActualizar_Click(object sender, EventArgs e)

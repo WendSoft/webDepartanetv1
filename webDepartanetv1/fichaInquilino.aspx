@@ -39,7 +39,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <HeaderTemplate>
-                            Ubicación
+                            Nombre
                         </HeaderTemplate>
                         <ItemTemplate>
                             <asp:Label ID="lblInquilino" runat="server" Text='<%#Eval("appaterno").ToString() + Eval("apmaterno").ToString() + ", " + Eval("nombre").ToString() %>'>
@@ -48,7 +48,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <HeaderTemplate>
-                            Ocupantes
+                            Telefonos
                         </HeaderTemplate>
                         <ItemTemplate>
                             <table>
@@ -67,7 +67,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <HeaderTemplate>
-                            Observaciones
+                            correo
                         </HeaderTemplate>
                         <ItemTemplate>
                             <asp:Label ID="lblCorreo" runat="server" Text='<%#Eval("correo") %>'></asp:Label>
@@ -81,69 +81,66 @@
     <!-- Bootstrap Modal Dialog -->
     <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <asp:UpdatePanel ID="upModal" runat="server" ChildrenAsTriggers="true" UpdateMode="Always">
-                <ContentTemplate>
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">
-                                <asp:Label ID="lblModalTitle" runat="server" Text="Ficha de inquilino"></asp:Label></h4>
-                        </div>
-                        <div class="modal-body" style="height: 600px;">
-                            <div class="col-md-10">
-                                <asp:Label runat="server" AssociatedControlID="rblTipo" CssClass="col-md-2 control-label">Tipo</asp:Label>
-                                <asp:RadioButtonList ID="rblTipo" CssClass="radio-inline" runat="server" RepeatLayout="Flow" RepeatDirection="Horizontal" AutoPostBack="false">
-                                    <asp:ListItem class="radio-inline" Text="Dueño/responsable" Value="2"></asp:ListItem>
-                                    <asp:ListItem class="radio-inline" Text="Inquilino" Value="1"></asp:ListItem>
-                                </asp:RadioButtonList>
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="rblTipo"
-                                    CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
-                            </div>
-                            <div class="col-md-10">
-                                <asp:Label runat="server" AssociatedControlID="txtAppaterno" CssClass="col-md-5 control-labe">Apellido paterno</asp:Label>
-                                <asp:TextBox runat="server" ID="txtAppaterno" CssClass="form-control" />
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="txtAppaterno"
-                                    CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
-                            </div>
-                            <div class="col-md-10">
-                                <asp:Label runat="server" AssociatedControlID="txtApmaterno" CssClass="col-md-5 control-labe">Apellido materno</asp:Label>
-                                <asp:TextBox runat="server" ID="txtApmaterno" CssClass="form-control" />
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="txtApmaterno"
-                                    CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
-                            </div>
-                            <div class="col-md-10">
-                                <asp:Label runat="server" AssociatedControlID="txtNombre" CssClass="col-md-5 control-labe">Nombre</asp:Label>
-                                <asp:TextBox runat="server" ID="txtNombre" CssClass="form-control" />
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="txtNombre"
-                                    CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
-                            </div>
-                            <div class="col-md-10">
-                                <asp:Label runat="server" AssociatedControlID="txtTelcel" CssClass="col-md-5 control-labe">Tel. Cel.</asp:Label>
-                                <asp:TextBox runat="server" ID="txtTelcel" CssClass="form-control" TextMode="Phone" />
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="txtTelcel"
-                                    CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
-                            </div>
-                            <div class="col-md-10">
-                                <asp:Label runat="server" AssociatedControlID="txtTelCasa" CssClass="col-md-5 control-labe">Tel. Casa</asp:Label>
-                                <asp:TextBox runat="server" ID="txtTelCasa" CssClass="form-control" TextMode="Phone" />
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="txtTelCasa"
-                                    CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
-                            </div>
-                            <div class="col-md-10">
-                                <asp:Label runat="server" AssociatedControlID="txtEmail" CssClass="col-md-5 control-labe">Correo</asp:Label>
-                                <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control" TextMode="Email" />
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="txtEmail"
-                                    CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-                            <asp:Button ID="btnActualizar" runat="server" CssClass="btn btn-info" aria-hidden="true" Text="Actualizar" OnClick="btnActualizar_Click"></asp:Button>
-                            <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-success" aria-hidden="true" Text="Guardar" OnClick="btnGuardar_Click"></asp:Button>
-                        </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">
+                        <asp:Label ID="lblModalTitle" runat="server" Text="Ficha de inquilino"></asp:Label></h4>
+                </div>
+                <div class="modal-body" style="height: 600px;">
+                    <div class="col-md-10">
+                        <asp:Label runat="server" AssociatedControlID="rblTipo" CssClass="col-md-2 control-label">Tipo</asp:Label>
+                        <asp:RadioButtonList ID="rblTipo" CssClass="radio-inline" runat="server" RepeatLayout="Flow" RepeatDirection="Horizontal" AutoPostBack="false">
+                            <asp:ListItem class="radio-inline" Text="Dueño" Value="1"></asp:ListItem>
+                            <asp:ListItem class="radio-inline" Text="Responsable" Value="2"></asp:ListItem>
+                            <asp:ListItem class="radio-inline" Text="Inquilino" Value="3"></asp:ListItem>
+                        </asp:RadioButtonList>
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="rblTipo"
+                            CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
                     </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+                    <div class="col-md-10">
+                        <asp:Label runat="server" AssociatedControlID="txtAppaterno" CssClass="col-md-5 control-labe">Apellido paterno</asp:Label>
+                        <asp:TextBox runat="server" ID="txtAppaterno" CssClass="form-control" />
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="txtAppaterno"
+                            CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
+                    </div>
+                    <div class="col-md-10">
+                        <asp:Label runat="server" AssociatedControlID="txtApmaterno" CssClass="col-md-5 control-labe">Apellido materno</asp:Label>
+                        <asp:TextBox runat="server" ID="txtApmaterno" CssClass="form-control" />
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="txtApmaterno"
+                            CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
+                    </div>
+                    <div class="col-md-10">
+                        <asp:Label runat="server" AssociatedControlID="txtNombre" CssClass="col-md-5 control-labe">Nombre</asp:Label>
+                        <asp:TextBox runat="server" ID="txtNombre" CssClass="form-control" />
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="txtNombre"
+                            CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
+                    </div>
+                    <div class="col-md-10">
+                        <asp:Label runat="server" AssociatedControlID="txtTelcel" CssClass="col-md-5 control-labe">Tel. Cel.</asp:Label>
+                        <asp:TextBox runat="server" ID="txtTelcel" CssClass="form-control" TextMode="Phone" />
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="txtTelcel"
+                            CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
+                    </div>
+                    <div class="col-md-10">
+                        <asp:Label runat="server" AssociatedControlID="txtTelCasa" CssClass="col-md-5 control-labe">Tel. Casa</asp:Label>
+                        <asp:TextBox runat="server" ID="txtTelCasa" CssClass="form-control" TextMode="Phone" />
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="txtTelCasa"
+                            CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
+                    </div>
+                    <div class="col-md-10">
+                        <asp:Label runat="server" AssociatedControlID="txtEmail" CssClass="col-md-5 control-labe">Correo</asp:Label>
+                        <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control" TextMode="Email" />
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="txtEmail"
+                            CssClass="text-danger" ErrorMessage="El campo es obligatorio." />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+                    <asp:Button ID="btnActualizar" runat="server" CssClass="btn btn-info" aria-hidden="true" Text="Actualizar" OnClick="btnActualizar_Click"></asp:Button>
+                    <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-success" aria-hidden="true" Text="Guardar" OnClick="btnGuardar_Click"></asp:Button>
+                </div>
+            </div>
         </div>
     </div>
 

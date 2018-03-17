@@ -14,7 +14,7 @@ namespace webDepartanetv1
             if (!this.IsPostBack)
             {
                 llenarPeriodos();
-                llenarGrid();
+                llenarConceptos();
             }
             else
             {
@@ -33,10 +33,8 @@ namespace webDepartanetv1
             ddlPeriodo.SelectedValue = DateTime.Now.Year.ToString();
         }
 
-        protected void llenarGrid()
+        protected void llenarConceptos()
         {
-            btnCancelar.Visible = false;
-            btnGuardar.Text = "Guardar";
             dbDepartanetEntities db = new dbDepartanetEntities();
             gvProductos.DataSource = db.Productos.OrderBy(u => u.vencimiento).ToList();
             gvProductos.DataBind();
@@ -50,12 +48,14 @@ namespace webDepartanetv1
             nwProducto.Descripcion = txtDescripcion.Text;
             nwProducto.Periodo = ddlPeriodo.SelectedValue;
             nwProducto.Activo = 1;
-            nwProducto.vencimiento = Convert.ToDateTime(txtVencimiento.Text);
+            nwProducto.vencimiento = DateTime.Parse(txtVencimiento.Text.Split('/')[0] + '/' + txtVencimiento.Text.Split('/')[1] + '/' + txtVencimiento.Text.Split('/')[2]);
             nwProducto.Importe = decimal.Parse(txtImporte.Text);
 
             dbDepartanetEntities db = new dbDepartanetEntities();
             db.Productos.Add(nwProducto);
             db.SaveChanges();
+
+            llenarConceptos();
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
@@ -65,10 +65,7 @@ namespace webDepartanetv1
             txtDescripcion.Text = "";
             txtImporte.Text = "0";
             txtVencimiento.Text = DateTime.Now.ToShortDateString();
-            btnGuardar.Text = "Guardar";
-            btnCancelar.Visible = false;
-
-            llenarGrid();
+            llenarConceptos();
         }
 
         protected void gvProductos_SelectedIndexChanged(object sender, EventArgs e)
@@ -89,9 +86,12 @@ namespace webDepartanetv1
             txtNombre.Text = nwProd.Nombre;
             txtDescripcion.Text = nwProd.Descripcion;
             txtImporte.Text = nwProd.Importe.ToString();
-            txtVencimiento.Text = ((DateTime)nwProd.vencimiento).ToShortDateString();
-            btnGuardar.Text = "Actualizar";
-            btnCancelar.Visible = true;
+            txtVencimiento.Text = ((DateTime)nwProd.vencimiento).Day.ToString() + "/" + ((DateTime)nwProd.vencimiento).Month + "/" + ((DateTime)nwProd.vencimiento).Year.ToString();
+
+            btnGuardar.Visible = false;
+            btnActualizar.Visible = true;
+
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "myModal", "$('#myModal').modal();", true);
         }
 
         protected void gvProductos_RowDeleted(object sender, GridViewDeletedEventArgs e)
@@ -111,13 +111,45 @@ namespace webDepartanetv1
 
         protected string setDateTime(DateTime fecha)
         {
-
             return fecha.ToShortDateString();
         }
 
         protected void gvProductos_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
         {
             gvProductos.SelectedIndex = e.NewSelectedIndex;
+        }
+
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+            gvProductos.SelectedIndex = -1;
+            btnGuardar.Visible = true;
+            btnActualizar.Visible = false;
+
+            ddlPeriodo.ClearSelection();
+            txtDescripcion.Text = "Descripción";
+            txtImporte.Text = decimal.Parse("0.00").ToString();
+            txtNombre.Text = "Nuevo Concepto";
+            txtVencimiento.Text = DateTime.Now.Day.ToString() + '/' + DateTime.Now.Month.ToString() + '/' + DateTime.Now.Year.ToString();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "myModal", "$('#myModal').modal();", true);
+        }
+
+        protected void btnActualizar_Click(object sender, EventArgs e)
+        {
+            int prod = Int32.Parse(gvProductos.SelectedDataKey["id"].ToString());
+
+            dbDepartanetEntities db = new dbDepartanetEntities();
+            Productos edProd = db.Productos.Where(a => a.id == prod).First();
+
+            edProd.Periodo = ddlPeriodo.SelectedValue;
+            edProd.Nombre = txtNombre.Text;
+            edProd.Descripcion = txtNombre.Text;
+            edProd.Activo = 1;
+            edProd.vencimiento = DateTime.Parse(txtVencimiento.Text.Split('/')[0] + '/' + txtVencimiento.Text.Split('/')[1] + '/' + txtVencimiento.Text.Split('/')[2]);
+            edProd.Importe = decimal.Parse(txtImporte.Text);
+
+            db.Entry(edProd).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            llenarConceptos();
         }
     }
 }
